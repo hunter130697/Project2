@@ -28,17 +28,17 @@ import javax.swing.JTabbedPane;
 import java.awt.ScrollPane;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
+import javax.swing.JTextPane;
 
 public class Panel extends JPanel{
 	private int count;
 	private JComboBox comboBox;
 	private Collection allTheSongs;
-	
-	
-	
-
-	
-	
+	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JButton btnNewButton_2;
+	private JTextArea txtrList;
 	
 	public Panel() {
 		
@@ -51,39 +51,17 @@ public class Panel extends JPanel{
 		setBackground(Color.GRAY);
 		setPreferredSize(new Dimension(551, 498));
 		
-		JLabel lblNewLabel = new JLabel("Genre:");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel.setBounds(39, 57, 53, 23);
-		add(lblNewLabel);
+		btnNewButton_2 = new JButton("Get Song");
+		btnNewButton_2.setBounds(193, 149, 89, 23);
+		add(btnNewButton_2);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(39, 117, 177, 156);
-		add(scrollPane);
-		
-		JTextArea SongByGen = new JTextArea();
-		scrollPane.setViewportView(SongByGen);
-		
-		JButton btnNewButton = new JButton("Get Song By Genre");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Collection songs = allTheSongs.findSongByGenre(""+comboBox.getSelectedItem());
-				String aString = "";
-				Iterator<Song> iter = songs.getIterator();
-				while(iter.hasNext())
-				{
-					Song s = iter.next();
-					aString += s + "\n";
-					
-				}
-				SongByGen.setText(aString);
-			}
-		});
-		btnNewButton.setBounds(39, 91, 177, 23);
-		add(btnNewButton);
+		txtrList = new JTextArea();
+		txtrList.setBounds(98, 183, 295, 174);
+		add(txtrList);
 		
 		comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(allTheSongs.getGenres()));
-		comboBox.setBounds(102, 60, 114, 20);
+		//comboBox.setModel(new DefaultComboBoxModel(allTheSongs.getGenres()));
+		comboBox.setBounds(181, 103, 114, 20);
 		add(comboBox);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -92,9 +70,6 @@ public class Panel extends JPanel{
 		
 		JMenu mnNewMenu = new JMenu("File");
 		menuBar.add(mnNewMenu);
-		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Open");
-		mnNewMenu.add(mntmNewMenuItem);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Exit");
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
@@ -137,21 +112,91 @@ public class Panel extends JPanel{
 						longtitude = Double.parseDouble(newLong);
 						tryAgain = false;
 				} while (tryAgain == true);
-				//Add the song to all
+				//Add the song to allTheSongs
 				allTheSongs.add(new Song(new_Id, newArtist, newGenre, newTitle, newAlbum, year, longtitude));
 				allTheSongs.writeFile("./Project2/finalTracks.csv");
 			}
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_2);
 		
+		JMenuItem mntmNewMenuItem = new JMenuItem("Remove");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean tryAgain = false;
+				String removeId = new String();
+				int remove_ID;
+				do {
+						// Get the attributes of the remove song
+						removeId = JOptionPane.showInputDialog("Enter the Song id to remove");
+						// Convert strings int
+						remove_ID = Integer.parseInt(removeId);
+						tryAgain = false;
+				} while (tryAgain == true);
+				//Delete the song from allTheSongs
+				allTheSongs.remove(new Song(remove_ID));
+				allTheSongs.writeFile("./Project2/finalTracks.csv");
+			}
+		});
+		mnNewMenu_1.add(mntmNewMenuItem);
+		
 		JSlider slider = new JSlider();
 		slider.setBounds(0, 420, 551, 26);
 		add(slider);
 		
 		JButton btnNewButton_1 = new JButton("Play");
-		btnNewButton_1.setBounds(242, 452, 53, 35);
+		btnNewButton_1.setBounds(227, 452, 105, 35);
 		add(btnNewButton_1);
-	}
+		
+		JRadioButton rdbtnNewRadioButton = new JRadioButton("Genre");
+		rdbtnNewRadioButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				comboBox.setModel(new DefaultComboBoxModel(allTheSongs.getGenres()));
+				btnNewButton_2.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						Collection songs = allTheSongs.findSongByGenre(""+comboBox.getSelectedItem());
+						String aString = "";
+						Iterator<Song> iter = songs.getIterator();
+						while(iter.hasNext())
+						{
+							Song s = iter.next();
+							aString += s + "\n";
+						}
+						txtrList.setText(aString);
+					}
+				});
+			}
+		});
+		buttonGroup.add(rdbtnNewRadioButton);
+		rdbtnNewRadioButton.setBounds(121, 59, 109, 23);
+		add(rdbtnNewRadioButton);
+		
+		JRadioButton rdbtnNewRadioButton_2 = new JRadioButton("Artist");
+		rdbtnNewRadioButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				comboBox.setModel(new DefaultComboBoxModel(allTheSongs.getArtists()));
+				btnNewButton_2.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						Collection songs = allTheSongs.findSongByArtist(""+comboBox.getSelectedItem());
+						String aString1 = "";
+						Iterator<Song> iter = songs.getIterator();
+						while(iter.hasNext())
+						{
+							Song s = iter.next();
+							aString1 += s + "\n";
+						}
+						txtrList.setText(aString1);
+					}
+				});
+			}
+		});
+		buttonGroup.add(rdbtnNewRadioButton_2);
+		rdbtnNewRadioButton_2.setBounds(234, 59, 109, 23);
+		add(rdbtnNewRadioButton_2);
+		
+		
+		
+		
+		}
 }
 
 

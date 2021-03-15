@@ -10,11 +10,13 @@ import java.util.*;
 public class Collection {
 	private ArrayList<Song> allSongs;
 	private TreeSet<String> genres;
+	private TreeSet<String> Artists;
 
 	// Default Constructor
 	public Collection () {
 		allSongs = new ArrayList<Song>();
 		genres = new TreeSet<String>();
+		Artists = new TreeSet<String>();
 	}
 	
 	// Add Song to Collection
@@ -293,6 +295,16 @@ public class Collection {
 		return toReturn;
 	}
 	
+	public String[] getArtists () {
+		String[] toReturn = new String[Artists.size()];
+		int index = 0;
+		for (String s : Artists) {
+			toReturn[index] = s;
+			index++;
+		}
+		return toReturn;
+	}
+	
 	// Read in the contents of a csv file to the collection.
 	public void readFile (String fn) {
 		BufferedReader lineReader = null;
@@ -303,7 +315,9 @@ public class Collection {
 			while ((line = lineReader.readLine()) != null) {
 				String[] tokens = line.split(",");
 				String genre = tokens[2];
+				String artist = tokens[1];
 				genres.add(genre);
+				Artists.add(artist);
 				this.add((new Song(Integer.parseInt(tokens[0]), tokens[1], tokens[2], tokens[3], tokens[4], Integer.parseInt(tokens[5]), Double.parseDouble(tokens[6]))));
 			}
 			
@@ -315,7 +329,9 @@ public class Collection {
 				while ((line = lineReader.readLine()) != null) {
 					String[] tokens = line.split(",");
 					String genre = tokens[2];
-					genres.add(genre);					
+					String artist = tokens[1];
+					genres.add(genre);
+					Artists.add(artist);
 					allSongs.add(new Song(Integer.parseInt(tokens[0]), tokens[1], tokens[2], tokens[3], tokens[4], Integer.parseInt(tokens[5]), Double.parseDouble(tokens[6])));
 				} 
 			}
