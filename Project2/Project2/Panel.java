@@ -31,6 +31,7 @@ import javax.swing.Action;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JTextPane;
+import javax.swing.JProgressBar;
 
 public class Panel extends JPanel{
 	private int count;
@@ -52,16 +53,16 @@ public class Panel extends JPanel{
 		setPreferredSize(new Dimension(551, 498));
 		
 		btnNewButton_2 = new JButton("Get Song");
-		btnNewButton_2.setBounds(193, 149, 89, 23);
+		btnNewButton_2.setBounds(222, 149, 89, 23);
 		add(btnNewButton_2);
 		
 		txtrList = new JTextArea();
-		txtrList.setBounds(98, 183, 295, 174);
+		txtrList.setBounds(119, 183, 295, 174);
 		add(txtrList);
 		
 		comboBox = new JComboBox();
 		//comboBox.setModel(new DefaultComboBoxModel(allTheSongs.getGenres()));
-		comboBox.setBounds(181, 103, 114, 20);
+		comboBox.setBounds(204, 103, 114, 20);
 		add(comboBox);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -124,7 +125,7 @@ public class Panel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				boolean tryAgain = false;
 				String removeId = new String();
-				int remove_ID;
+				int remove_ID = 0;
 				do {
 						// Get the attributes of the remove song
 						removeId = JOptionPane.showInputDialog("Enter the Song id to remove");
@@ -138,10 +139,6 @@ public class Panel extends JPanel{
 			}
 		});
 		mnNewMenu_1.add(mntmNewMenuItem);
-		
-		JSlider slider = new JSlider();
-		slider.setBounds(0, 420, 551, 26);
-		add(slider);
 		
 		JButton btnNewButton_1 = new JButton("Play");
 		btnNewButton_1.setBounds(227, 452, 105, 35);
@@ -167,7 +164,7 @@ public class Panel extends JPanel{
 			}
 		});
 		buttonGroup.add(rdbtnNewRadioButton);
-		rdbtnNewRadioButton.setBounds(121, 59, 109, 23);
+		rdbtnNewRadioButton.setBounds(133, 59, 109, 23);
 		add(rdbtnNewRadioButton);
 		
 		JRadioButton rdbtnNewRadioButton_2 = new JRadioButton("Artist");
@@ -190,8 +187,13 @@ public class Panel extends JPanel{
 			}
 		});
 		buttonGroup.add(rdbtnNewRadioButton_2);
-		rdbtnNewRadioButton_2.setBounds(234, 59, 109, 23);
+		rdbtnNewRadioButton_2.setBounds(281, 59, 109, 23);
 		add(rdbtnNewRadioButton_2);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setIcon(new ImageIcon(Panel.class.getResource("/Project2/Music-image.jpg")));
+		lblNewLabel.setBounds(0, 21, 551, 477);
+		add(lblNewLabel);
 		
 		
 		
