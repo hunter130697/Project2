@@ -1,5 +1,7 @@
 package Project2;
 
+import java.awt.event.WindowEvent;
+
 import javax.swing.JFrame;
 
 public class Main {
@@ -16,7 +18,7 @@ public class Main {
 		//	System.out.print(s+"/");
 		//}
 		
-		JFrame frame = new JFrame("Push Counter");
+		JFrame frame = new JFrame("Music");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		Panel panel = new Panel();
@@ -24,5 +26,7 @@ public class Main {
 		
 		frame.pack();
 		frame.setVisible(true);
+		
+		
 	}
 }

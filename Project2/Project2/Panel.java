@@ -1,4 +1,8 @@
- package Project2;
+//Anh Dang
+//Project 2
+
+
+package Project2;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,6 +17,7 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import java.awt.Font;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JMenuBar;
 import javax.swing.JCheckBoxMenuItem;
@@ -83,6 +88,7 @@ public class Panel extends JPanel{
 		JMenu mnNewMenu_1 = new JMenu("Edit");
 		menuBar.add(mnNewMenu_1);
 		
+		//add song
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Add");
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -100,7 +106,7 @@ public class Panel extends JPanel{
 				do {
 					
 						// Get the attributes of the new song
-						newId = JOptionPane.showInputDialog("Enter the Song id");
+						newId = JOptionPane.showInputDialog("Enter the Song ID");
 						newArtist = JOptionPane.showInputDialog("Enter the artist's name");
 						newGenre = JOptionPane.showInputDialog("Enter the song genre");
 						newTitle = JOptionPane.showInputDialog("Enter the track title");
@@ -120,30 +126,41 @@ public class Panel extends JPanel{
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_2);
 		
+		//remove song by ID
 		JMenuItem mntmNewMenuItem = new JMenuItem("Remove");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean tryAgain = false;
 				String removeId = new String();
-				int remove_ID = 0;
+				int remove_Id = 0;
+				
 				do {
-						// Get the attributes of the remove song
-						removeId = JOptionPane.showInputDialog("Enter the Song id to remove");
-						// Convert strings int
-						remove_ID = Integer.parseInt(removeId);
-						tryAgain = false;
+						// Get the attributes of the new song
+					removeId = JOptionPane.showInputDialog("Enter the Song ID to remove");
+						// Convert strings to doubles or ints
+					remove_Id = Integer.parseInt(removeId);
+					tryAgain = false;
 				} while (tryAgain == true);
-				//Delete the song from allTheSongs
-				allTheSongs.remove(new Song(remove_ID));
+				//Add the song to allTheSongs
+				//allTheSongs.remove(remove_Id); (Error)
 				allTheSongs.writeFile("./Project2/finalTracks.csv");
 			}
 		});
 		mnNewMenu_1.add(mntmNewMenuItem);
 		
+		//Edit(I did it wrong so I'm think i will do it later)
+		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Edit song");
+		mntmNewMenuItem_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		mnNewMenu_1.add(mntmNewMenuItem_3);
+		
 		JButton btnNewButton_1 = new JButton("Play");
 		btnNewButton_1.setBounds(227, 452, 105, 35);
 		add(btnNewButton_1);
 		
+		//get Songs by Genre
 		JRadioButton rdbtnNewRadioButton = new JRadioButton("Genre");
 		rdbtnNewRadioButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -167,6 +184,7 @@ public class Panel extends JPanel{
 		rdbtnNewRadioButton.setBounds(133, 59, 109, 23);
 		add(rdbtnNewRadioButton);
 		
+		//Get songs by Artist
 		JRadioButton rdbtnNewRadioButton_2 = new JRadioButton("Artist");
 		rdbtnNewRadioButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -192,14 +210,20 @@ public class Panel extends JPanel{
 		
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setIcon(new ImageIcon(Panel.class.getResource("/Project2/Music-image.jpg")));
-		lblNewLabel.setBounds(0, 21, 551, 477);
+		lblNewLabel.setBounds(0, 21, 551, 415);
 		add(lblNewLabel);
 		
+		JSlider slider = new JSlider();
+		slider.setBackground(Color.WHITE);
+		slider.setBounds(378, 452, 152, 26);
+		add(slider);
 		
-		
-		
+		JProgressBar progressBar = new JProgressBar();
+		progressBar.setBounds(0, 436, 551, 14);
+		add(progressBar);
 		
 		}
+
 }
 
 
